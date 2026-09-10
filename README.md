@@ -1,56 +1,71 @@
-🎯 SumUp Promo Cohort Analysis
+# 🎯 SumUp Promo Cohort Analysis
+> SQL + Tableau analysis measuring the impact and quality of a reduced-fee promotion targeted at new merchants — cohort quality, weekly engagement, and product adoption.
 
-SQL + Tableau analysis measuring the impact and quality of a reduced-fee promotion targeted at new merchants — cohort quality, weekly engagement, and product adoption.
+![SQL](https://img.shields.io/badge/SQL-SQLite-blue) ![Tableau](https://img.shields.io/badge/Tableau-Public-orange) ![Status](https://img.shields.io/badge/Status-Complete-green)
 
-Show Image Show Image Show Image
+---
 
-📌 Project Overview
+## 📌 Project Overview
 
-This project analyzes a reduced-fee promotion aimed at activating new merchants, using transaction data from June–September 2025. The goal is to measure whether the promo cohort's contribution to GMV is proportional to its size, how consistently new merchants engage week over week, and how their product usage compares to established merchants — using SQL for data preparation and Tableau for visual analytics.
+This project analyzes a **reduced-fee promotion** aimed at activating new merchants, using transaction data from **June–September 2025**. The goal is to measure whether the promo cohort's contribution to GMV is proportional to its size, how consistently new merchants engage week over week, and how their product usage compares to established merchants — using **SQL** for data preparation and **Tableau** for visual analytics.
 
-All data is synthetically generated and does not represent any real individuals or companies.
+All data is **synthetically generated** and does not represent any real individuals or companies.
 
-📊 Tableau Dashboard
+---
 
-Answers the question: "Is the reduced-fee promo bringing in merchants who actually stick around and contribute value — or just cheap volume?"
+## 📊 Tableau Dashboard
 
-Sheets included:
+Answers the question: *"Is the reduced-fee promo bringing in merchants who actually stick around and contribute value — or just cheap volume?"*
 
-📈 GMV Trend: New vs Established — daily bar chart, 01 Aug – 29 Sep
-🟦 Promo Cohort Contribution — share of total merchants vs. share of total GMV
-📊 GMV Share by Product (New) — card_reader / online_store / payment_links, new vs established
-📶 Products Success Rate by Merchants — new vs established
-🏆 Top 5 Merchants — by month (August / September)
-🎛️ Filters — Product, Date Range, Merchant Cohort
+**Sheets included:**
+- 📈 **GMV Trend: New vs Established** — daily bar chart, 01 Aug – 29 Sep
+- 🟦 **Promo Cohort Contribution** — share of total merchants vs. share of total GMV
+- 📊 **GMV Share by Product (New)** — card_reader / online_store / payment_links, new vs established
+- 📶 **Products Success Rate by Merchants** — new vs established
+- 🏆 **Top 5 Merchants** — by month (August / September)
+- 🎛️ **Filters** — Product, Date Range, Merchant Cohort
 
-KPI Cards:
+**KPI Cards:**
+| KPI | Value |
+|---|---|
+| Cohort Quality Index | 0.47 |
+| Weekly Coverage | 85.8% |
+| Newly Activated Merchants | 120 |
+| Net Revenue Contribution (New) | €1,557.6 |
+| Discount Amount | €389.2 |
+| Multi-Product Usage (New) | 97.5% |
 
-KPI	Value
-Cohort Quality Index	0.47
-Weekly Coverage	85.8%
-Newly Activated Merchants	120
-Net Revenue Contribution (New)	€1,557.6
-Discount Amount	€389.2
-Multi-Product Usage (New)	97.5%
-💡 Key Insights
-⚖️ Cohort Quality Index: 0.47 — new merchants make up 47.8% of all active merchants but generate only 22.5% of total GMV. Expected in an early ramp-up phase, but worth tracking monthly to confirm the gap closes.
-📅 Weekly coverage of 85.8% — promo merchants transact on ~6 of 7 weekdays on average, a sign of genuine early engagement rather than one-off trial usage.
-🔀 97.5% of new merchants use more than one product — strong adoption signal, not just single-transaction discount-chasing.
-💳 Product mix differs by cohort — new merchants lean heavily on card_reader (€70.3K) over online_store/payment_links (~€67K each), while established merchants are evenly split — the promo appears to land best with card-present use cases.
-✅ New merchants show a higher product success rate (88.1%) than established (84.5%) — despite lower volume, promo merchants convert reliably across product types.
-💰 ~4:1 revenue-to-discount ratio — €1,557.6 in net revenue contribution against €389.2 given in discounts so far.
-🔍 Sanity check on established merchants — average transaction value pre- vs. post-promo launch shows no meaningful shift, ruling out cannibalization of existing merchant spend.
-❓ Business Questions Answered
-#	Question	SQL Query
-Q1	How many merchants transacted with reduced fees in August 2025?	How_many_merchants_made_transactions_with_the_reduced_fees_in_August_2025.sql
-Q2	How does new-merchant GMV share compare to their headcount share?	Promo_Cohort_Index.sql
-Q3	How consistently do promo merchants transact across the week?	weekly_coverage.sql
-Q4	What is the average transaction value for new vs. established merchants?	Merchant_GPV_Quality.sql / Established_Merchants_GPV_Quality.sql
-Q5	Which merchant used the reduced fee the most?	Which_merchant_had_the_highest_number_of_reduced_fee_transactions.sql
-Q6	Did the promo affect established merchants' spending behavior?	Sanity_check.sql
-🔍 SQL Highlights
-tableau_export — Cohort Tagging (Table Build)
-sql
+---
+
+## 💡 Key Insights
+
+- ⚖️ **Cohort Quality Index: 0.47** — new merchants make up **47.8%** of all active merchants but generate only **22.5%** of total GMV. Expected in an early ramp-up phase, but worth tracking monthly to confirm the gap closes.
+- 📅 **Weekly coverage of 85.8%** — promo merchants transact on ~6 of 7 weekdays on average, a sign of genuine early engagement rather than one-off trial usage.
+- 🔀 **97.5% of new merchants use more than one product** — strong adoption signal, not just single-transaction discount-chasing.
+- 💳 **Product mix differs by cohort** — new merchants lean heavily on `card_reader` (€70.3K) over `online_store`/`payment_links` (~€67K each), while established merchants are evenly split — the promo appears to land best with card-present use cases.
+- ✅ **New merchants show a higher product success rate (88.1%) than established (84.5%)** — despite lower volume, promo merchants convert reliably across product types.
+- 💰 **~4:1 revenue-to-discount ratio** — €1,557.6 in net revenue contribution against €389.2 given in discounts so far.
+- 🔍 **Sanity check on established merchants** — average transaction value pre- vs. post-promo launch shows no meaningful shift, ruling out cannibalization of existing merchant spend.
+
+---
+
+## ❓ Business Questions Answered
+
+| # | Question | SQL Query |
+|---|---|---|
+| Q1 | How many merchants transacted with reduced fees in August 2025? | `How_many_merchants_made_transactions_with_the_reduced_fees_in_August_2025.sql` |
+| Q2 | How does new-merchant GMV share compare to their headcount share? | `Promo_Cohort_Index.sql` |
+| Q3 | How consistently do promo merchants transact across the week? | `weekly_coverage.sql` |
+| Q4 | What is the average transaction value for new vs. established merchants? | `Merchant_GPV_Quality.sql` / `Established_Merchants_GPV_Quality.sql` |
+| Q5 | Which merchant used the reduced fee the most? | `Which_merchant_had_the_highest_number_of_reduced_fee_transactions.sql` |
+| Q6 | Did the promo affect established merchants' spending behavior? | `Sanity_check.sql` |
+
+---
+
+## 🔍 SQL Highlights
+
+### tableau_export — Cohort Tagging (Table Build)
+```sql
 CREATE TABLE tableau_export AS
 SELECT
     transaction_id,
@@ -70,8 +85,10 @@ SELECT
         ELSE 'Established'
     END AS merchant_cohort
 FROM "Home_Challenge_-_Transactions_2025_clean";
-Promo Cohort Quality Index (CTE)
-sql
+```
+
+### Promo Cohort Quality Index (CTE)
+```sql
 WITH combined_summary AS (
     SELECT
         COUNT(DISTINCT merchant_id) AS total_merchants,
@@ -98,8 +115,10 @@ SELECT
         / NULLIF((100.0 * new_merchants / NULLIF(total_merchants, 0)), 0)
     , 3) AS promo_cohort_quality_index
 FROM combined_summary;
-Weekly Coverage
-sql
+```
+
+### Weekly Coverage
+```sql
 WITH merchant_coverage AS (
     SELECT
         merchant_id,
@@ -117,13 +136,24 @@ SELECT
     COUNT(*) AS total_merchants,
     ROUND(AVG(weekly_coverage), 3) AS avg_weekly_coverage
 FROM merchant_coverage;
-🛠️ Tools Used
-Tool	Purpose
-SQLite / DB Browser	Data querying and transformation
-Tableau Public	Data visualisation and dashboard
-VS Code	SQL file editing
-GitHub	Version control and portfolio hosting
-📁 Repository Structure
+```
+
+---
+
+## 🛠️ Tools Used
+
+| Tool | Purpose |
+|---|---|
+| **SQLite / DB Browser** | Data querying and transformation |
+| **Tableau Public** | Data visualisation and dashboard |
+| **VS Code** | SQL file editing |
+| **GitHub** | Version control and portfolio hosting |
+
+---
+
+## 📁 Repository Structure
+
+```
 SumUp-Promo-project/
 │
 ├── data/                                                        # Source data
@@ -145,14 +175,19 @@ SumUp-Promo-project/
 │   └── dashboard.png
 │
 └── README.md
-🔗 Live Dashboard
+```
 
-📌 View the interactive Tableau dashboard on Tableau Public:
+---
 
-[[Add your Tableau Public link here](https://public.tableau.com/app/profile/viktor.dimitrov/viz/SumUpInterview_17878383508450/Dashboard1?publish=yes)]
+## 🔗 Live Dashboard
 
-👤 Author
+📌 View the interactive Tableau dashboard on **Tableau Public**:
+> [SumUp Promo Cohort Dashboard](https://public.tableau.com/app/profile/viktor.dimitrov/viz/SumUpInterview_17878383508450/Dashboard1?publish=yes)
 
-Viktor Dimitrov
-Data & BI Analyst | SQL • Tableau • Power BI
-GitHub
+---
+
+## 👤 Author
+
+**Viktor Dimitrov**  
+Data & BI Analyst | SQL • Tableau • Power BI  
+[GitHub](https://github.com/viktordimitrov89)
