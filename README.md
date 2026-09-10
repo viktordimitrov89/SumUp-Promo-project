@@ -15,6 +15,8 @@ This project analyzes a **reduced-fee promotion** aimed at activating new mercha
 
 Answers the question: *"Is the reduced-fee promo bringing in merchants who actually stick around and contribute value — or just cheap volume?"*
 
+![Overview Dashboard](screenshots/dashboard.png)
+
 **Sheets included:**
 - 📈 **GMV Trend: New vs Established** — daily bar chart, 01 Aug – 29 Sep
 - 🟦 **Promo Cohort Contribution** — share of total merchants vs. share of total GMV
