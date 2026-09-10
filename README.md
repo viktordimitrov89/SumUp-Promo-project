@@ -9,8 +9,6 @@
 
 This project analyzes a **reduced-fee promotion** aimed at activating new merchants, using transaction data from **June–September 2025**. The goal is to measure whether the promo cohort's contribution to Gross Merchant Value (GMV) is proportional to its size, how consistently new merchants engage week over week, and how their product usage compares to established merchants — using **SQL** for data preparation and **Tableau** for visual analytics.
 
-All data is **synthetically generated** and does not represent any real individuals or companies.
-
 ---
 
 ## 📊 Tableau Dashboard
