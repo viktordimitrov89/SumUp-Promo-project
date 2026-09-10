@@ -149,7 +149,7 @@ SumUp-Promo-project/
 
 📌 View the interactive Tableau dashboard on Tableau Public:
 
-(https://public.tableau.com/app/profile/viktor.dimitrov/viz/SumUpInterview_17878383508450/Dashboard1?publish=yes)
+[[Add your Tableau Public link here](https://public.tableau.com/app/profile/viktor.dimitrov/viz/SumUpInterview_17878383508450/Dashboard1?publish=yes)]
 
 👤 Author
 
