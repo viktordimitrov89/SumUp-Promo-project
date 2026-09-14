@@ -7,7 +7,8 @@
 
 ## 📌 Project Overview
 
-This project analyzes a **reduced-fee promotion** aimed at activating new merchants, using transaction data from **June–September 2025**. The goal is to measure whether the promo cohort's contribution to Gross Merchant Value (GMV) is proportional to its size, how consistently new merchants engage week over week, and how their product usage compares to established merchants — using **SQL** for data preparation and **Tableau** for visual analytics.
+This project analyzes a **reduced-fee promotion** aimed at activating new merchants, using transaction data from **June–September 2025**. The goal is to measure whether the promo cohort's contribution to GMV is proportional to its size, how consistently new merchants engage week over week, and how their product usage compares to established merchants — using **SQL** for data preparation and **Tableau** for visual analytics.
+
 
 ---
 
@@ -19,6 +20,7 @@ Answers the question: *"Is the reduced-fee promo bringing in merchants who actua
 
 **Sheets included:**
 - 📈 **GMV Trend: New vs Established** — daily line chart, 01 Aug – 29 Sep
+- 📉 **Established GMV Trend** — monthly line chart, June–September, isolating established-merchant GMV to check for seasonality vs. a promo-driven shift
 - 🟦 **Promo Cohort Contribution** — share of total merchants vs. share of total GMV
 - 📊 **GMV Share by Product (New)** — card_reader / online_store / payment_links, new vs established
 - 📶 **Products Success Rate by Merchants** — new vs established
@@ -34,6 +36,7 @@ Answers the question: *"Is the reduced-fee promo bringing in merchants who actua
 | Net Revenue Contribution (New) | €1,557.6 |
 | Discount Amount | €389.2 |
 | Multi-Product Usage (New) | 97.5% |
+| Promo Lift (Established) | +39.9% |
 
 ---
 
@@ -46,6 +49,8 @@ Answers the question: *"Is the reduced-fee promo bringing in merchants who actua
 - ✅ **New merchants show a higher product success rate (88.1%) than established (84.5%)** — despite lower volume, promo merchants convert reliably across product types.
 - 💰 **~4:1 revenue-to-discount ratio** — €1,557.6 in net revenue contribution against €389.2 given in discounts so far.
 - 🔍 **Sanity check on established merchants** — average transaction value pre- vs. post-promo launch shows no meaningful shift, ruling out cannibalization of existing merchant spend.
+- 📈 **Established merchant GMV jumped ~36-40% the month the promo launched** — established GMV was flat-to-declining in June–July, then rose sharply in August and plateaued in September. Since established merchants don't receive the reduced fee themselves, this pattern is consistent with a **positive spillover effect** (e.g. increased platform visibility or overall traffic), though it isn't proof of direct causation.
+- ⚠️ **Data quality note** — 4 merchants have a first transaction on/after Aug 1 but were never flagged with `reduced_fee_promo`. Excluding them from the established baseline lowers the promo lift figure from 39.9% to ~36.0%, confirming the growth signal isn't an artifact of misclassification.
 
 ---
 
@@ -59,6 +64,7 @@ Answers the question: *"Is the reduced-fee promo bringing in merchants who actua
 | Q4 | What is the average transaction value for new vs. established merchants? | `Merchant_GPV_Quality.sql` / `Established_Merchants_GPV_Quality.sql` |
 | Q5 | Which merchant used the reduced fee the most? | `Which_merchant_had_the_highest_number_of_reduced_fee_transactions.sql` |
 | Q6 | Did the promo affect established merchants' spending behavior? | `Sanity_check.sql` |
+| Q7 | Did established merchant GMV shift around the promo launch, and is it seasonal or promo-driven? | `Established_Promo_Lift.sql` |
 
 ---
 
@@ -138,6 +144,48 @@ SELECT
 FROM merchant_coverage;
 ```
 
+### Established Promo Lift — Monthly Trend + Pre/Post Comparison
+```sql
+WITH promo_merchants AS (
+    SELECT DISTINCT merchant_id 
+    FROM "Home_Challenge_-_Transactions_2025_clean"
+    WHERE fee_type = 'reduced_fee_promo'
+),
+unflagged_new AS (
+    SELECT merchant_id
+    FROM "Home_Challenge_-_Transactions_2025_clean"
+    GROUP BY merchant_id
+    HAVING MIN(created_at_clean) >= '2025-08-01'
+),
+true_established AS (
+    SELECT DISTINCT merchant_id
+    FROM "Home_Challenge_-_Transactions_2025_clean"
+    WHERE merchant_id NOT IN (SELECT merchant_id FROM promo_merchants)
+      AND merchant_id NOT IN (SELECT merchant_id FROM unflagged_new)
+),
+monthly AS (
+    SELECT
+        strftime('%Y-%m', created_at_clean) AS year_month,
+        COUNT(DISTINCT merchant_id) AS active_merchants,
+        SUM(transaction_amount_eur) AS total_gmv
+    FROM "Home_Challenge_-_Transactions_2025_clean"
+    WHERE transaction_status = 'successful'
+      AND merchant_id IN (SELECT merchant_id FROM true_established)
+      AND strftime('%Y-%m', created_at_clean) IN ('2025-06','2025-07','2025-08','2025-09')
+    GROUP BY strftime('%Y-%m', created_at_clean)
+)
+SELECT
+    year_month,
+    active_merchants,
+    ROUND(total_gmv, 2) AS total_gmv,
+    ROUND(
+        100.0 * (total_gmv - LAG(total_gmv) OVER (ORDER BY year_month)) 
+        / NULLIF(LAG(total_gmv) OVER (ORDER BY year_month), 0)
+    , 2) AS mom_gmv_growth_pct
+FROM monthly
+ORDER BY year_month;
+```
+
 ---
 
 ## 🛠️ Tools Used
@@ -169,7 +217,8 @@ SumUp-Promo-project/
 │   ├── New_Merchants_based_on_promo_fee.sql
 │   ├── How_many_merchants_made_transactions_with_the_reduced_fees_in_August_2025.sql
 │   ├── Which_merchant_had_the_highest_number_of_reduced_fee_transactions.sql
-│   └── Sanity_check.sql
+│   ├── Sanity_check.sql
+│   └── Established_Promo_Lift.sql
 │
 ├── screenshots/                                                 # Dashboard screenshot
 │   └── dashboard.png
