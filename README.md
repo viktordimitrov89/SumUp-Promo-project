@@ -18,7 +18,7 @@ Answers the question: *"Is the reduced-fee promo bringing in merchants who actua
 ![Overview Dashboard](screenshots/dashboard.png)
 
 **Sheets included:**
-- 📈 **GMV Trend: New vs Established** — daily bar chart, 01 Aug – 29 Sep
+- 📈 **GMV Trend: New vs Established** — daily line chart, 01 Aug – 29 Sep
 - 🟦 **Promo Cohort Contribution** — share of total merchants vs. share of total GMV
 - 📊 **GMV Share by Product (New)** — card_reader / online_store / payment_links, new vs established
 - 📶 **Products Success Rate by Merchants** — new vs established
