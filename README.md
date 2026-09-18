@@ -157,13 +157,13 @@ WITH promo_merchants AS (
 ),
 unflagged_new AS (
     SELECT merchant_id
-    FROM "Home_Challenge_-_Transactions_2025_clean"
+    FROM "tableau_export"
     GROUP BY merchant_id
     HAVING MIN(created_at_clean) >= '2025-08-01'
 ),
 true_established AS (
     SELECT DISTINCT merchant_id
-    FROM "Home_Challenge_-_Transactions_2025_clean"
+    FROM "tableau_export"
     WHERE merchant_id NOT IN (SELECT merchant_id FROM promo_merchants)
       AND merchant_id NOT IN (SELECT merchant_id FROM unflagged_new)
 ),
@@ -172,7 +172,7 @@ monthly AS (
         strftime('%Y-%m', created_at_clean) AS year_month,
         COUNT(DISTINCT merchant_id) AS active_merchants,
         SUM(transaction_amount_eur) AS total_gmv
-    FROM "Home_Challenge_-_Transactions_2025_clean"
+    FROM "tableau_export"
     WHERE transaction_status = 'successful'
       AND merchant_id IN (SELECT merchant_id FROM true_established)
       AND strftime('%Y-%m', created_at_clean) IN ('2025-06','2025-07','2025-08','2025-09')
