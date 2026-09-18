@@ -7,16 +7,15 @@
 
 ## 📌 Project Overview
 
-This project analyzes a **reduced-fee promotion** aimed at activating new merchants, using transaction data from **June–September 2025**. The goal is to measure whether the promo cohort's contribution to Gross Merchant Value (GMV) is proportional to its size, how consistently new merchants engage week over week, and how their product usage compares to established merchants — using **SQL** for data preparation and **Tableau** for visual analytics.
+This project analyzes a **reduced-fee promotion** aimed at activating new merchants, using transaction data from **June–September 2025**. The goal is to measure whether the promo cohort's contribution to GMV is proportional to its size, how consistently new merchants engage week over week, and how their product usage compares to established merchants — using **SQL** for data preparation and **Tableau** for visual analytics.
 
+All data is **synthetically generated** and does not represent any real individuals or companies.
 
 ---
 
 ## 📊 Tableau Dashboard
 
 Answers the question: *"Is the reduced-fee promo bringing in merchants who actually stick around and contribute value — or just cheap volume?"*
-
-![Overview Dashboard](screenshots/dashboard.png)
 
 **Sheets included:**
 - 📈 **GMV Trend: New vs Established** — daily line chart, 01 Aug – 29 Sep
@@ -25,6 +24,7 @@ Answers the question: *"Is the reduced-fee promo bringing in merchants who actua
 - 📊 **GMV Share by Product (New)** — card_reader / online_store / payment_links, new vs established
 - 📶 **Products Success Rate by Merchants** — new vs established
 - 🏆 **Top 5 Merchants** — by month (August / September)
+- 🥇 **Top Promo Merchant** — KPI card highlighting the single merchant with the highest count of reduced-fee promo transactions
 - 🎛️ **Filters** — Product, Date Range, Merchant Cohort
 
 **KPI Cards:**
@@ -32,11 +32,12 @@ Answers the question: *"Is the reduced-fee promo bringing in merchants who actua
 |---|---|
 | Cohort Quality Index | 0.47 |
 | Weekly Coverage | 85.8% |
-| Newly Activated Merchants | 120 |
+| Newly Activated Merchants | 120 (88 in August) |
 | Net Revenue Contribution (New) | €1,557.6 |
 | Discount Amount | €389.2 |
 | Multi-Product Usage (New) | 97.5% |
 | Promo Lift (Established) | +39.9% |
+| Top Promo Merchant | Merchant #255 — 39 reduced-fee transactions |
 
 ---
 
@@ -50,6 +51,7 @@ Answers the question: *"Is the reduced-fee promo bringing in merchants who actua
 - 💰 **~4:1 revenue-to-discount ratio** — €1,557.6 in net revenue contribution against €389.2 given in discounts so far.
 - 🔍 **Sanity check on established merchants** — average transaction value pre- vs. post-promo launch shows no meaningful shift, ruling out cannibalization of existing merchant spend.
 - 📈 **Established merchant GMV jumped ~36-40% the month the promo launched** — established GMV was flat-to-declining in June–July, then rose sharply in August and plateaued in September. Since established merchants don't receive the reduced fee themselves, this pattern is consistent with a **positive spillover effect** (e.g. increased platform visibility or overall traffic), though it isn't proof of direct causation.
+- 🥇 **Merchant #255 is the heaviest promo user**, with 39 reduced-fee transactions — well above the cohort average, suggesting either high-frequency small-ticket activity or a merchant type especially well suited to the card_reader product.
 - ⚠️ **Data quality note** — 4 merchants have a first transaction on/after Aug 1 but were never flagged with `reduced_fee_promo`. Excluding them from the established baseline lowers the promo lift figure from 39.9% to ~36.0%, confirming the growth signal isn't an artifact of misclassification.
 
 ---
