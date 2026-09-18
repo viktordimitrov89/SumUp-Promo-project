@@ -17,6 +17,8 @@ All data is **synthetically generated** and does not represent any real individu
 
 Answers the question: *"Is the reduced-fee promo bringing in merchants who actually stick around and contribute value — or just cheap volume?"*
 
+![Promo Cohort Dashboard](screenshots/dashboard.png)
+
 **Sheets included:**
 - 📈 **GMV Trend: New vs Established** — daily line chart, 01 Aug – 29 Sep
 - 📉 **Established GMV Trend** — monthly line chart, June–September, isolating established-merchant GMV to check for seasonality vs. a promo-driven shift
